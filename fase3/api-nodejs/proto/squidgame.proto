@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.squidgame";
+option java_outer_classname = "SquidGame";
+option objc_class_prefix = "HLW";
+
+package squidgame;
+
+service Matches {
+  rpc AddMatch (MatchRequest) returns (MatchReply) {}
+}
+
+message MatchRequest {
+  int32 gameId = 1;
+  int32 numberPlayers = 2;
+}
+
+message MatchReply {
+  string message = 1;
+}

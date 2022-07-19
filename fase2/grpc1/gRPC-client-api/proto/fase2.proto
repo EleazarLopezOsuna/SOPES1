@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/AllVides/so1_proyecto/fase2/gRPC-client-api/proto";
+
+package proto;
+
+// Clienete que se ejecutara principalmente
+service RunPlay {
+  // Se envia la configuracion del juego
+  rpc SenConfigurationPlay (PlayRequest) returns (PlayReply) {}
+}
+
+// la solicitud contiene el id del juego y el numero de jugadores.
+message PlayRequest {
+  int32 gameId = 1;
+  int32 player = 2;
+}
+
+// la respuesta contiene el mensaje obtenido de la solicitud
+message PlayReply {
+  string message = 1;
+}

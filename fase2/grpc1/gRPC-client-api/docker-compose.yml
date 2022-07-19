@@ -1,0 +1,11 @@
+version: "3.9" 
+services:
+  grpcs:
+    image: cristofhers/grpcclient_fg2:1.0
+    container_name: grpcclient
+    environment:
+      REDIS_HOST: 35.233.187.22
+      REDIS_PORT: 50051
+    ports:
+      - "8080:8080"
+    restart: always

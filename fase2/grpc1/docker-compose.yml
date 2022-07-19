@@ -1,0 +1,58 @@
+version: "3.9" 
+services:
+  rb:
+    image: rabbitmq:3.9-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+    networks:
+      - fase2-project-g2
+
+  grpcs:
+    image: cristofhers/grpcserver_fg2:1.0
+    container_name: grpcserver
+    environment:
+      Host_grpcServer: 0.0.0.0
+      Port_grpcServer: 50051
+      Host_Rabbit: 34.69.161.104
+      Port_Rabbit: 5672
+      Prot_Rabbit: amqp
+    ports:
+    - "50051:50051"
+    restart: always
+    depends_on:
+    - rb
+    networks:
+    - fase2-project-g2
+
+  rbs:
+    image: cristofhers/rabbitsubscriber_fg2:1.0
+    container_name: rabbitsubscriber
+    environment:
+      REDIS_HOST: 34.138.216.59
+      REDIS_PORT: 80
+      TIDIS_HOST: 35.197.30.237
+      TIDIS_PORT: 80
+      MONGO_DB: sopes
+      MONGO_COL: fdos
+      MONGO_USER: sopes1
+      MONGO_PASS: 1234
+      MONGO_HOST: 35.233.187.22
+      MONGO_PORT: 80
+      Host_Rabbit: 34.69.161.104
+      Us_Rabbit: guest
+      Ps_Rabbit: guest
+      Prot_Rabbit: amqp
+      Port_Rabbit: 5672
+    restart: always
+    depends_on:
+    - grpcs
+    networks:
+    - fase2-project-g2
+
+networks:
+  fase2-project-g2:
+    name: "fase2-project-g2"
+    driver: bridge

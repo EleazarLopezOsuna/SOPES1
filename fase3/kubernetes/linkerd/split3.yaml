@@ -1,0 +1,13 @@
+# Traffic Split -> Queue 1 50% ; Error 50%
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: error-split
+  namespace: squidgame
+spec:
+  service: kafka-pod
+  backends:
+  - service: kafka-pod
+    weight: 500m
+  - service: error-injector
+    weight: 500m

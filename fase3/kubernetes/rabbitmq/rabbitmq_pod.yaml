@@ -1,0 +1,66 @@
+# API Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rabbitmq-pod
+  namespace: squidgame
+  name: rabbitmq-pod
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: rabbitmq-pod
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: rabbitmq-pod
+    spec:
+      containers:
+        - image: cristofhers/grpcclient_fg2:2.0
+          name: rabbitmq-api
+          env:
+            - name: Host_gRPCServ
+              value: "localhost"
+            - name: Port_gRPCServ
+              value: "50051"
+          ports:
+            - containerPort: 3000
+        - image: cristofhers/grpcserver_fg2:1.0
+          name: rabbitmq-producer
+          env:
+            - name: Host_grpcServer
+              value: "0.0.0.0"
+            - name: Port_grpcServer
+              value: "50051"
+            - name: Host_Rabbit
+              value: "rabbitmq-cluster"
+            - name: Us_Rabbit
+              value: "guest"
+            - name: Ps_Rabbit
+              value: "guest"
+            - name: Prot_Rabbit
+              value: "amqp"
+            - name: Port_Rabbit
+              value: "5672"
+          ports:
+            - containerPort: 50051
+---
+# API Service on port 3000
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-pod
+  namespace: squidgame
+  labels:
+    app: rabbitmq-pod
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: rabbitmq-pod

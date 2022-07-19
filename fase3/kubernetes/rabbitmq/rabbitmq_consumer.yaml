@@ -1,0 +1,52 @@
+# Consumer Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rabbitmq-consumer
+  namespace: squidgame
+  name: rabbitmq-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq-consumer
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-consumer
+    spec:
+      containers:
+        - image: cristofhers/rabbitsubscriber_fg2:1.0
+          name: rabbitmq-consumer
+          env:
+            - name: Host_Rabbit
+              value: "rabbitmq-cluster"
+            - name: Us_Rabbit
+              value: "guest"
+            - name: Ps_Rabbit
+              value: "guest"
+            - name: Prot_Rabbit
+              value: "amqp"
+            - name: Port_Rabbit
+              value: "5672"
+            - name: REDIS_HOST
+              value: "34.125.126.185"
+            - name: REDIS_PORT
+              value: "80"
+            - name: TIDIS_HOST
+              value: "34.125.195.218"
+            - name: TIDIS_PORT
+              value: "80"
+            - name: MONGO_HOST
+              value: "34.125.142.217"
+            - name: MONGO_PORT
+              value: "80"
+            - name: MONGO_DB
+              value: "sopes"
+            - name: MONGO_COL
+              value: "fdos"
+            - name: MONGO_USER
+              value: "sopes1"
+            - name: MONGO_PASS
+              value: "1234"

@@ -1,0 +1,46 @@
+# Rust Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-backend
+  namespace: squidgame
+  name: rust-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rust-backend
+  template:
+    metadata:
+      labels:
+        app: rust-backend
+    spec:
+      containers:
+        - image: iguanav/rust-sopes-f3:3.0
+          name: rust-backend
+          env:
+            - name: MONGODB_URI
+              value: "mongodb://sopes1:1234@34.125.142.217:80"
+          ports:
+            - containerPort: 8080
+---
+# Rust Backend Service on port 8080
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rust-backend
+  name: rust-backend
+  namespace: squidgame
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: rust-backend
+  type: LoadBalancer
+status:
+  loadBalancer: {}

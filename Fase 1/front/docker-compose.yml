@@ -1,0 +1,12 @@
+version: "3.9" 
+services:
+  front:
+    image: iguanav/frontso1
+    container_name: frontso1
+    environment:
+      REACT_APP_IP_BACKONE: 35.212.231.127:80/
+      REACT_APP_IP_BACKTWO: 35.212.231.127:80/
+      REACT_APP_IP_SOCKET: http://tallerdocker-341423.uc.r.appspot.com/
+    ports:
+      - "80:80"
+    restart: always

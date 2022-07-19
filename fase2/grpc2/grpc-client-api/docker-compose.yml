@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  client:
+    image: jaredosuna/client_fase2
+    ports:
+      - "3000:3000"
+    environment:
+      - SERVER_IP=`YourServerIP`
+      - SERVER_PORT=`YourServerPort`
+      - API_PORT=`YourAPIPort`

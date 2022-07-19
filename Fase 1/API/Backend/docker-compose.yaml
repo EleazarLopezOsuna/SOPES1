@@ -1,0 +1,18 @@
+
+version: "3.9" 
+services:
+  api:
+    image: cristofhers/go_grupo2:1.0
+    container_name: servergo
+    environment:
+      VM: vm1
+      PATH_RAM: /home/procesos/ram_grupo2
+      PATH_PROC: /home/procesos/cpu_grupo2
+      GCF_RAM: us-central1-tallerdocker-341423.cloudfunctions.net/CreateRamLog
+      GCF_PROCS: us-central1-tallerdocker-341423.cloudfunctions.net/CreateProcLog
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - /proc/ram_grupo2:/home/procesos/ram_grupo2
+      - /proc/cpu_grupo2:/home/procesos/cpu_grupo2

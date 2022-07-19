@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  socket:
+    image: iguanav/socket-sopes-f3
+    container_name: nodejs-backend
+    environment:
+      HOSTREDIS: 34.125.126.185
+      HOSTTIDIS: 34.125.195.218
+      PORTDB: 80
+    ports:
+      - "5000:5000"
+    restart: always
+  exporter:
+    image: iguanav/rust-sopes-f3
+    container_name: rust-backend
+    environment:
+      MONGODB_URI: mongodb://sopes1:1234@34.125.142.217:80
+    ports:
+      - 8080:8080
+    restart: always
+

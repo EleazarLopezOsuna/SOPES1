@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.proto";
+option java_outer_classname = "ProtoProto";
+option objc_class_prefix = "HLW";
+
+package proto;
+
+// Server que se ejecutara principalmente
+service RunPlay {
+    // Se envia la configuracion del juego
+    rpc SenConfigurationPlay (PlayRequest) returns (PlayReply) {}
+}
+  
+  // la solicitud contiene el id del juego y el numero de jugadores.
+message PlayRequest {
+    int32 gameId = 1;
+    int32 player = 2;
+}
+  
+  // la respuesta contiene el mensaje obtenido de la solicitud
+message PlayReply {
+    string message = 1;
+}

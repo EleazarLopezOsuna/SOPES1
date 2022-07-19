@@ -1,0 +1,30 @@
+# sample configuration file for tidis
+
+desc = "sample configuration for tidis"
+
+[tidis]
+
+listen = ":5379"
+max_connection = 5000
+
+loglevel = "info"
+
+#transaction retry count when commit failed in case of conflict
+txn_retry = 2
+
+auth = ""
+
+#tenant will be used as the key prefix, in case one tidis used by multiple apps
+#TODO
+tenantid = ""
+
+#tikv gc and leader check configure
+db_gc_enabled = true
+db_gc_interval = 600
+db_gc_safepoint_life_time = 600
+leader_check_interval = 30
+leader_lease_duration = 60
+
+[backend]
+#tikv placement driver addresses
+pds = "127.0.0.1:2379"

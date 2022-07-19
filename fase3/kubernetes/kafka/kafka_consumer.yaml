@@ -1,0 +1,50 @@
+# Consumer Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kafka-consumer
+  namespace: squidgame
+  name: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+        - image: jaredosuna/consumer_fase2
+          name: kafka-consumer
+          env:
+            - name: SERVER_PORT
+              value: "50051"
+            - name: KAFKA_HOST
+              value: "squidgame-cluster-kafka-bootstrap"
+            - name: KAFKA_PORT
+              value: "9092"
+            - name: KAFKA_TOPIC
+              value: "my-topic"
+            - name: REDIS_HOST
+              value: "34.125.126.185"
+            - name: REDIS_PORT
+              value: "80"
+            - name: TIDIS_HOST
+              value: "34.125.195.218"
+            - name: TIDIS_PORT
+              value: "80"
+            - name: MONGO_HOST
+              value: "34.125.142.217"
+            - name: MONGO_PORT
+              value: "80"
+            - name: MONGO_DB
+              value: "sopes"
+            - name: MONGO_COL
+              value: "fdos"
+            - name: MONGO_USER
+              value: "sopes1"
+            - name: MONGO_PASS
+              value: "1234"

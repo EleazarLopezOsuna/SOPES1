@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/AllVides/so1_proyecto/fase2/grpc2/grpc-server-producer/proto";
+
+package squidgame;
+
+service Matches {
+  rpc AddMatch (MatchRequest) returns (MatchReply) {}
+}
+
+message MatchRequest {
+  int32 gameId = 1;
+  int32 numberPlayers = 2;
+}
+
+message MatchReply {
+  string message = 1;
+}

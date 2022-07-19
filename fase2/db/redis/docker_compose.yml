@@ -1,0 +1,20 @@
+version: "3.9" 
+services:
+  db:
+    image: redis
+    container_name: dbredis
+    ports:
+      - "80:6379"
+    restart: always
+  exporter:
+    image: oliver006/redis_exporter
+    container_name: exporter
+    environment:
+      REDIS_ADDR: redis://34.125.126.185:80
+      REDIS_USER: null
+    ports:
+      - 8080:9121
+    restart: always
+    depends_on:
+      - db
+      

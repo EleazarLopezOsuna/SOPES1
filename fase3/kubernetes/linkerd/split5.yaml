@@ -1,0 +1,13 @@
+# Traffic Split -> Queue 1 50% ; Queue 2 50%
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: service-split
+  namespace: squidgame
+spec:
+  service: kafka-pod
+  backends:
+  - service: kafka-pod
+    weight: 500m
+  - service: rabbitmq-pod
+    weight: 500m

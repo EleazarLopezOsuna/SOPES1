@@ -1,0 +1,22 @@
+# Nginx Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kafka-pod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+  namespace: squidgame
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "34.72.66.110.nip.io"
+    http:
+      paths:
+      - path: /?(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: kafka-pod
+            port:
+              number: 3000

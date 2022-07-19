@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  db:
+    image: mongo
+    container_name: dbmongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sopes1
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    ports:
+      - "80:27017"
+    restart: always
+    volumes:
+      - /home/($USER)/mongodata:/data/db
+    networks:
+      - monitoreo
+  exporter:
+    image: bitnami/mongodb-exporter:latest
+    container_name: exporter
+    environment:
+      MONGODB_URI: mongodb://exporter:password@35.233.187.22:80
+    ports:
+      - 8080:9216
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - monitoreo
+networks:
+  monitoreo:
+    name: "monitoreo"
+    driver: bridge
+
+
+
